@@ -21,6 +21,10 @@ public class Edge<K> {
     @Getter @Setter
     private boolean bidirectional = true;
 
+    public static <K> Edge<K> directional (K tail, K head) {
+        return new Edge<>(tail, head, false);
+    }
+
     /**
      * verify tail key or any key if it's didirectional
      * @param key the key to be verified
