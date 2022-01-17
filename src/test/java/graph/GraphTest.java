@@ -3,11 +3,9 @@ package graph;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
@@ -33,7 +31,7 @@ public class GraphTest {
                 Vertex.of("B", 20),
                 Vertex.of("C", 30),
         };
-        graph.addVertex(vertices);
+        graph.addVertices(vertices);
         assertEquals("A", graph.getVertex(10));
         assertEquals("B", graph.getVertex(20));
         assertEquals("C", graph.getVertex(30));

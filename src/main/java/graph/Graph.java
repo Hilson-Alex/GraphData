@@ -29,7 +29,7 @@ public class Graph<K, T> {
      * @param vertices the vertices that are created
      *                with the graph
      */
-    public Graph (Map<K, T> vertices){
+    public Graph (Map<K, T> vertices) {
         this.vertices = vertices;
     }
 
@@ -38,7 +38,7 @@ public class Graph<K, T> {
      * @param vertex the vertices to be added
      */
     @SafeVarargs
-    public final void addVertex(Vertex<K, T>... vertex){
+    public final void addVertices (Vertex<K, T>... vertex) {
         vertices.putAll(Arrays.stream(vertex).collect(Collectors.toMap(Vertex::getKey, Vertex::getContent)));
     }
 
@@ -49,9 +49,9 @@ public class Graph<K, T> {
      * @param newEdges the edges to be added
      */
     @SafeVarargs
-    public final void addEdges(Edge<K>... newEdges){
+    public final void addEdges(Edge<K>... newEdges) {
         Arrays.stream(newEdges).parallel().forEach(edge -> {
-            if (vertices.containsKey(edge.getHead()) && vertices.containsKey(edge.getTail())){
+            if (vertices.containsKey(edge.getHead()) && vertices.containsKey(edge.getTail())) {
                 edges.add(edge);
             }
         });
@@ -65,8 +65,8 @@ public class Graph<K, T> {
      * @return true if the edge was added, false
      *          otherwise
      */
-    public final boolean addEdge(Edge<K> edge){
-        if (vertices.containsKey(edge.getHead()) && vertices.containsKey(edge.getTail())){
+    public final boolean addEdge(Edge<K> edge) {
+        if (vertices.containsKey(edge.getHead()) && vertices.containsKey(edge.getTail())) {
             edges.add(edge);
             return true;
         }
@@ -79,7 +79,7 @@ public class Graph<K, T> {
      * @return one vertex with this name or null
      * if theres none.
      */
-    public T getVertex (K key){
+    public T getVertex (K key) {
         return vertices.get(key);
     }
 
@@ -91,7 +91,7 @@ public class Graph<K, T> {
      * @return all edges connected to it or an
      * empty list
      */
-    public List<Edge<K>> getEdges (K key){
+    public List<Edge<K>> getEdges (K key) {
         return edges.parallelStream()
                 .filter(edge -> edge.hasHead(key) || edge.hasTail(key))
                 .collect(Collectors.toUnmodifiableList());
@@ -104,7 +104,7 @@ public class Graph<K, T> {
      * @return all edges connected to it or an
      * empty list
      */
-    public List<Edge<K>> getEdges (Vertex<K, T> vertex){
+    public List<Edge<K>> getEdges (Vertex<K, T> vertex) {
         T content = getVertex(vertex.getKey());
         if (content.equals(vertex.getContent())) {
             return getEdges(vertex.getKey());
@@ -123,7 +123,7 @@ public class Graph<K, T> {
      * @return one edge that matches the criteria or null
      * if none matches
      */
-    public Edge<K> getEdge (K labelIn, K labelOut){
+    public Edge<K> getEdge (K labelIn, K labelOut) {
         return edges.parallelStream()
                 .filter(edge -> edge.hasTail(labelIn) && edge.hasHead(labelOut)).findAny().orElse(null);
 
@@ -139,7 +139,7 @@ public class Graph<K, T> {
      *                bidirectional any vertex if it is
      * @return all edges that matches the criteria
      */
-    public List<Edge<K>> getEdges (K labelIn, K labelOut){
+    public List<Edge<K>> getEdges (K labelIn, K labelOut) {
         return edges.parallelStream()
                 .filter(edge -> edge.hasTail(labelIn) && edge.hasHead(labelOut)).collect(Collectors.toList());
 
@@ -150,7 +150,7 @@ public class Graph<K, T> {
      * @param label the vertex label
      * @return the removed vertex
      */
-    public Vertex<K, T> removeVertex (K label){
+    public Vertex<K, T> removeVertex (K label) {
         getEdges(label).parallelStream().forEach(edges::remove);
         return Vertex.of(vertices.remove(label), label);
     }
@@ -162,7 +162,7 @@ public class Graph<K, T> {
      * @param head the head on directioned edges or any
      *             if it is bidirectional
      */
-    public void removeEdge (K tail, K head){
+    public void removeEdge (K tail, K head) {
         Edge<K> edge = Edge.bidirectional(tail, head);
         edges.remove(edge);
     }
@@ -175,7 +175,7 @@ public class Graph<K, T> {
      *             if it is bidirectional
      * @param bidirectional if the edge is bidirectional
      */
-    public void removeEdge (K tail, K head, boolean bidirectional){
+    public void removeEdge (K tail, K head, boolean bidirectional) {
         Edge<K> edge = Edge.of(tail, head, bidirectional);
         edges.remove(edge);
     }
@@ -195,7 +195,7 @@ public class Graph<K, T> {
     public void setEdges(List<Edge<K>> edges) {
         List<Edge<K>> list = new ArrayList<>(edges.size());
         edges.forEach(edge -> {
-            if (vertices.containsKey(edge.getHead()) && vertices.containsKey(edge.getTail())){
+            if (vertices.containsKey(edge.getHead()) && vertices.containsKey(edge.getTail())) {
                 list.add(edge);
             }
         });
