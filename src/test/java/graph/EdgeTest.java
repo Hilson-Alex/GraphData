@@ -1,5 +1,6 @@
 package graph;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -59,6 +60,23 @@ public class EdgeTest {
         Edge<String> edge1 = Edge.of("A", "B", false);
         Edge<String> edge2 = Edge.bidirectional("A", "B");
         assertNotEquals (edge1, edge2);
+    }
+
+    @Test
+    public void TestIfDirectionedConstructorWorks () {
+        Edge<String> edge1 = Edge.of("A", "B", false);
+        Edge<String> edge2 = Edge.directional("A", "B");
+        assertEquals(edge1, edge2);
+    }
+
+    @Test
+    public void TestEqualsAndHashCode () {
+        Edge<String> edge1 = Edge.bidirectional("A", "B");
+        Edge<String> edge2 = Edge.bidirectional("B", "A");
+        Edge<String> edge3 = Edge.directional("B", "A");
+        Edge<String> edge4 = Edge.directional("A", "B");
+        Edge<String> edge5 = Edge.bidirectional("C", "A");
+        EqualsVerifier.forRelaxedEqualExamples(edge1, edge2).andUnequalExamples(edge3, edge4, edge5);
     }
 
 }
