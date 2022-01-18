@@ -60,3 +60,13 @@ graph.addEdges(Edge.directional("Alice", "Ned"));
 // Create an edge Alice -> Anne
 graph.addEdges(Edge.of("Alice", "Anne", false));
 ```
+
+## Authors
+
+* Gabriel Assunção de Souza: [@Souza-gabriel](https://github.com/Souza-gabriel)
+* Hilson A. W. Jr.: [@Hilson-Alex](https://github.com/Hilson-Alex)
+
+## License
+This project is licensed under the MIT License - see the [LICENSE.md](/LICENSE) file for details
+
+
